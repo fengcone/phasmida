@@ -2,6 +2,8 @@ package com.fengcone.phasmida.core;
 
 import com.fengcone.phasmida.exception.PhasmidaRegistryException;
 import com.fengcone.phasmida.fragment.Fragment;
+import com.fengcone.phasmida.registry.MutexRelationRegistry;
+import com.fengcone.phasmida.registry.PhasmidaRegistry;
 
 /**
  * @author fengcone
@@ -35,7 +37,7 @@ public class PhasmidaFactory {
             newInstance.init(words.split(","), i, signWord);
             fragments[i] = newInstance;
         }
-        PhasmidaRegistry.checkMutexRelation(fragments);
+        MutexRelationRegistry.checkMutexRelation(fragments);
         return new Phasmida(fragments);
     }
 }

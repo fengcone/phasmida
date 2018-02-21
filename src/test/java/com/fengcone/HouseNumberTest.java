@@ -2,8 +2,8 @@ package com.fengcone;
 
 import com.fengcone.phasmida.core.Phasmida;
 import com.fengcone.phasmida.core.PhasmidaFactory;
-import com.fengcone.phasmida.core.PhasmidaRegistry;
-import com.fengcone.phasmida.core.StringContext;
+import com.fengcone.phasmida.registry.RegistryUtil;
+import com.fengcone.phasmida.core.PhasmidaContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -11,14 +11,14 @@ import org.junit.Test;
 public class HouseNumberTest {
     @Test
     public void testCase1() {
-        PhasmidaRegistry.registerStandardFragments();
+        RegistryUtil.registerStandardFragments();
         PhasmidaFactory factory = new PhasmidaFactory();
         Phasmida phasmida = factory.getPhasmida("withNumRange(0,10000).with(房,室,单元,-,号楼,栋,号院,房间,门,座,层).withNumRange(0,1000)");
-        StringContext context = new StringContext("好景国际3号楼601");
+        PhasmidaContext context = new PhasmidaContext("好景国际3号楼601");
         boolean process = phasmida.process(context);
         log.info(context.toString());
         assert process;
-        context = new StringContext("好景国际3-601");
+        context = new PhasmidaContext("好景国际3-601");
         process = phasmida.process(context);
         log.info(context.toString());
         assert process;
