@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<properties>
+		<property name="patternlayout">%-d{yyyy-MM-dd HH:mm:ss}[ %t:%r ] - [%-5p] %c-%M:%L - %m%n%throwable{full}</property>
+	</properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT" follow="true">
+			<ThresholdFilter level="trace" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout pattern="${patternlayout}" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<AsyncRoot level="debug">
+			<AppenderRef ref="console" />
+		</AsyncRoot>
+	</Loggers>
+</Configuration>
