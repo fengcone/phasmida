@@ -34,30 +34,27 @@ public class WithCharRangeFragment extends AbstractFragment {
         for (int i = 0; i < words.length - 1; i++) {
             String range = words[i];
             String[] split = range.split("-");
-            if (split.length != 2) {
+            if (split.length != 2 && split.length != 1 && (split.length == 1 && range.length() != 1) && !range.equals("-")) {
                 throw new IllegalArgumentException("the range " + range + " in withCharRangeFragment is illegal : error expression");
             }
             RangePair pair = new RangePair();
-            if (split[0].startsWith("\\u")) {
-                pair.rangeStart = (char) Integer.parseInt(split[0].substring(2), 16);
-            } else {
-                if (split[0].length() != 1) {
-                    throw new IllegalArgumentException("the range " + range + " in withCharRangeFragment is illegal : error expression");
-                }
-                pair.rangeStart = split[0].charAt(0);
-            }
-            if (split[1].startsWith("\\u")) {
-                pair.rangeEnd = (char) Integer.parseInt(split[1].substring(2), 16);
-            } else {
-                if (split[1].length() != 1) {
-                    throw new IllegalArgumentException("the range " + range + " in withCharRangeFragment is illegal : error expression");
-                }
-                pair.rangeEnd = split[1].charAt(0);
-            }
+            pair.rangeStart = (split.length == 1 || range.equals("-")) ? range.charAt(0) : getChar(split[0]);
+            pair.rangeEnd = (split.length == 1 || range.equals("-")) ? range.charAt(0) : getChar(split[1]);
             if (pair.rangeStart > pair.rangeEnd) {
                 throw new IllegalArgumentException("the range " + range + " in withCharRangeFragment is illegal : the start must be less than the end");
             }
             rangePairs.add(pair);
+        }
+    }
+
+    private char getChar(String split) {
+        if (split.startsWith("\\u")) {
+            return (char) Integer.parseInt(split.substring(2), 16);
+        } else {
+            if (split.length() != 1) {
+                throw new IllegalArgumentException("the range " + split + " in withCharRangeFragment is illegal : error expression");
+            }
+            return split.charAt(0);
         }
     }
 
@@ -105,22 +102,24 @@ public class WithCharRangeFragment extends AbstractFragment {
     }
 
     private boolean processOnce(PhasmidaContext context) {
-        for (RangePair pair : rangePairs) {
-            if (context.needBeHead()) {
-                int charIndex = context.getEndIndex();
-                do {
-                    if (charIndex + 1 > context.getStringLength()) {
-                        return false;
-                    }
-                    char chr = context.getString().charAt(charIndex);
+        if (context.needBeHead()) {
+            int charIndex = context.getEndIndex();
+            do {
+                if (charIndex + 1 > context.getStringLength()) {
+                    return false;
+                }
+                char chr = context.getString().charAt(charIndex);
+                for (RangePair pair : rangePairs) {
                     if (pair.rangeStart <= chr && pair.rangeEnd >= chr) {
                         context.setEndIndex(charIndex + 1);
                         context.setNextNeedBeHead(false);
                         return true;
                     }
-                    charIndex++;
-                } while (charIndex != context.getStringLength());
-            } else {
+                }
+                charIndex++;
+            } while (charIndex != context.getStringLength());
+        } else {
+            for (RangePair pair : rangePairs) {
                 if (context.getEndIndex() >= context.getStringLength()) {
                     return false;
                 }
