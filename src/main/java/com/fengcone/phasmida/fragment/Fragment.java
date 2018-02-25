@@ -9,8 +9,6 @@ import com.fengcone.phasmida.core.PhasmidaContext;
 public interface Fragment {
 
     /**
-     * 非表达式头部方法
-     *
      * @param context 处理的上下文
      * @return 是否成功被处理
      */
