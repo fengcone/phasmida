@@ -1,7 +1,7 @@
 package com.fengcone.phasmida.fragment;
 
 import com.fengcone.phasmida.core.IndexPair;
-import com.fengcone.phasmida.core.StringContext;
+import com.fengcone.phasmida.core.PhasmidaContext;
 
 public class WithAnythingFragment extends AbstractFragment {
 
@@ -9,13 +9,13 @@ public class WithAnythingFragment extends AbstractFragment {
 
 
     @Override
-    public boolean process(StringContext context) {
+    public boolean process(PhasmidaContext context) {
         context.setNextNeedBeHead(true);
         return true;
     }
 
     @Override
-    public boolean processAfterNext(StringContext context) {
+    public boolean processAfterNext(PhasmidaContext context) {
         IndexPair lastPair = context.getLastIndexPair(1);
         if (lastPair == null) {
             return false;
@@ -30,7 +30,7 @@ public class WithAnythingFragment extends AbstractFragment {
         } else {
             result = lastPair.getStartIndex() - lastSecondPair.getEndIndex() <= anythingCount;
             if (result) {
-                context.putIndexPair(getFragmentsIndex(),lastSecondPair.getEndIndex(),lastPair.getStartIndex());
+                context.putIndexPair(getFragmentsIndex(), lastSecondPair.getEndIndex(), lastPair.getStartIndex());
             }
         }
         return result;
@@ -38,7 +38,7 @@ public class WithAnythingFragment extends AbstractFragment {
 
     @Override
     public void init(String[] words) {
-        if (words == null || words.length != 1) {
+        if (words == null || words.length == 0) {
             throw new IllegalArgumentException("error expression for withAnythingFragment :" + words);
         }
         anythingCount = Integer.valueOf(words[0]);

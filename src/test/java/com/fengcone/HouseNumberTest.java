@@ -11,17 +11,10 @@ import org.junit.Test;
 public class HouseNumberTest {
     @Test
     public void testCase1() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("withNumRange(0,10000).with(房,室,单元,-,号楼,栋,号院,房间,门,座,层).withNumRange(0,1000)");
-        PhasmidaContext context = new PhasmidaContext("好景国际3号楼601");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert process;
-        context = new PhasmidaContext("好景国际3-601");
-        process = phasmida.process(context);
-        log.info(context.toString());
-        assert process;
+        PhasmidaContext context = PhasmidaTestUtil.test("withNumRange(0,10000).with(房,室,单元,-,号楼,栋,号院,房间,门,座,层).withNumRange(0,1000)", "好景国际3号楼601");
+        assert context.isResult();
+        context = PhasmidaTestUtil.test("withNumRange(0,10000).with(房,室,单元,-,号楼,栋,号院,房间,门,座,层).withNumRange(0,1000)", "好景国际3-601");
+        assert context.isResult();
     }
 }
 /**

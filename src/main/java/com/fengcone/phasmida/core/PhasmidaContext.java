@@ -3,12 +3,13 @@ package com.fengcone.phasmida.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringContext {
+public class PhasmidaContext {
     private String string;
     private int endIndex;
     private int startIndex;
     private List<IndexPair> indexPairs;
     private boolean nextNeedBeHead;
+    private boolean result;
 
     public boolean needBeHead() {
         return nextNeedBeHead;
@@ -18,7 +19,7 @@ public class StringContext {
         this.nextNeedBeHead = nextNeedBeHead;
     }
 
-    public StringContext(String string) {
+    public PhasmidaContext(String string) {
         this.nextNeedBeHead = true;
         this.string = string;
     }
@@ -48,7 +49,9 @@ public class StringContext {
     }
 
     public void clearIndexPair() {
-        this.indexPairs.clear();
+        if (indexPairs != null) {
+            this.indexPairs.clear();
+        }
     }
 
     public IndexPair getLastIndexPair(int reverseIndex) {
@@ -73,8 +76,24 @@ public class StringContext {
         indexPairs.add(pair);
     }
 
+    public List<IndexPair> getIndexPairs() {
+        return indexPairs;
+    }
+
+    public void setIndexPairs(List<IndexPair> indexPairs) {
+        this.indexPairs = indexPairs;
+    }
+
+    public boolean isResult() {
+        return result;
+    }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
+
     @Override
     public String toString() {
-        return "StringContext [string=" + string + ", endIndex=" + endIndex + ", startIndex=" + startIndex + ", indexPairs=" + indexPairs + "]";
+        return "PhasmidaContext [string=" + string + ", endIndex=" + endIndex + ", startIndex=" + startIndex + ", indexPairs=" + indexPairs + "]";
     }
 }

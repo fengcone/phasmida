@@ -11,34 +11,11 @@ import org.junit.Test;
 public class WithoutTest {
     @Test
     public void testCase1() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(6).without(我们)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert !process;
-    }
-
-    @Test
-    public void testCase2() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("without(我们).with(向上)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert !process;
-    }
-
-    @Test
-    public void testCase3() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(我们).without(向上)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert !process;
+        PhasmidaContext context = PhasmidaTestUtil.test("with(6).without(我们)", "天天6我们向上");
+        assert !context.isResult();
+        context = PhasmidaTestUtil.test("without(我们).with(向上)", "天天6我们向上");
+        assert !context.isResult();
+        context = PhasmidaTestUtil.test("with(我们).without(向上)", "天天6我们向上");
+        assert !context.isResult();
     }
 }

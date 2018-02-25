@@ -2,8 +2,9 @@ package com.fengcone;
 
 import com.fengcone.phasmida.core.Phasmida;
 import com.fengcone.phasmida.core.PhasmidaFactory;
-import com.fengcone.phasmida.registry.RegistryUtil;
+import com.fengcone.phasmida.registry.PhasmidaRegistry;
 import com.fengcone.phasmida.core.PhasmidaContext;
+import com.fengcone.phasmida.registry.RegistryUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -12,53 +13,30 @@ public class WithTest {
 
     @Test
     public void testCase1() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(6)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上6好");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert process;
+        PhasmidaContext context = PhasmidaTestUtil.test("with(6)", "天天6我们向上");
+        assert context.isResult();
         assert context.getStartIndex() == 2;
         assert context.getEndIndex() == 3;
 
-    }
-
-    @Test
-    public void testCase2() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(6).with(我们)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上6好");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert process;
+        context = PhasmidaTestUtil.test("with(6).with(我们)", "天天6我们向上6好");
+        assert context.isResult();
         assert context.getEndIndex() == 5;
         assert context.getStartIndex() == 3;
+        context = PhasmidaTestUtil.test("with(6).without(我们)", "天天6我们向上");
+        assert !context.isResult();
+        context = PhasmidaTestUtil.test("with(好好,坏坏).with(学习)", "好好学习天天向上");
+        assert context.isResult();
+        context = PhasmidaTestUtil.test("with(好好,坏坏).with(学习)", "坏坏学习天天向上");
+        assert context.isResult();
     }
 
     @Test
-    public void testCase3() {
+    public void testCase5(){
         RegistryUtil.registerStandardFragments();
         PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(6).without(我们)");
-        PhasmidaContext context = new PhasmidaContext("天天6我们向上");
+        Phasmida phasmida = factory.getPhasmida("with(Hello).with( world, phasmida)");
+        PhasmidaContext context = new PhasmidaContext("Hello phasmida");
         boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert !process;
-    }
-
-    @Test
-    public void testCase4() {
-        RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(好好,坏坏).with(学习)");
-        PhasmidaContext context = new PhasmidaContext("好好学习天天向上");
-        boolean process = phasmida.process(context);
-        log.info(context.toString());
-        assert process;
-        context = new PhasmidaContext("坏坏学习天天向上");
-        process = phasmida.process(context);
         log.info(context.toString());
         assert process;
     }

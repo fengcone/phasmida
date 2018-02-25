@@ -1,6 +1,6 @@
 package com.fengcone.phasmida.fragment;
 
-import com.fengcone.phasmida.core.StringContext;
+import com.fengcone.phasmida.core.PhasmidaContext;
 
 /**
  * @author fengcone
@@ -9,7 +9,7 @@ public class WithFragment extends AbstractFragment {
     String[] withWords;
 
     @Override
-    public boolean process(StringContext context) {
+    public boolean process(PhasmidaContext context) {
         int nowIndex = context.getEndIndex();
         String tempString = context.getString().substring(nowIndex);
         for (String word : withWords) {
@@ -37,7 +37,7 @@ public class WithFragment extends AbstractFragment {
 
 
     @Override
-    public boolean processAfterNext(StringContext context) {
+    public boolean processAfterNext(PhasmidaContext context) {
         return true;
     }
 

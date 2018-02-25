@@ -9,7 +9,11 @@ public class Phasmida {
         this.fragments = fragments;
     }
 
-    public boolean process(StringContext context) {
+    public Fragment[] getFragments() {
+        return fragments;
+    }
+
+    public boolean process(PhasmidaContext context) {
         boolean result;
         Fragment lastFragment = null;
         int fragmentsIndex = 0;
@@ -32,11 +36,13 @@ public class Phasmida {
                 context.clearIndexPair();
                 context.setEndIndex(0);
                 context.setStartIndex(0);
+                context.setResult(result);
                 return result;
             }
             fragmentsIndex++;
             lastFragment = fragment;
         } while (fragmentsIndex != fragments.length);
+        context.setResult(result);
         return result;
     }
 

@@ -1,13 +1,13 @@
 package com.fengcone.phasmida.fragment;
 
-import com.fengcone.phasmida.core.StringContext;
+import com.fengcone.phasmida.core.PhasmidaContext;
 
 public class WithNumRangeFragment extends AbstractFragment {
     private long rangeStart;
     private long rangeEnd;
 
     @Override
-    public boolean process(StringContext context) {
+    public boolean process(PhasmidaContext context) {
         if (!context.needBeHead()) {
             char chr = context.getString().charAt(context.getEndIndex());
             if (chr < '0' || chr > '9') {
@@ -45,15 +45,16 @@ public class WithNumRangeFragment extends AbstractFragment {
     }
 
     @Override
-    public boolean processAfterNext(StringContext context) {
+    public boolean processAfterNext(PhasmidaContext context) {
         return true;
     }
 
     @Override
     protected void init(String[] words) {
-        if (words == null || words.length != 2) {
-            throw new IllegalArgumentException("error size of words for withNumRangeFragment");
+        if (words == null || words.length == 0) {
+            throw new IllegalArgumentException("error expression for withNumRangeFragment :" + words);
         }
+
         rangeStart = Long.valueOf(words[0]);
         rangeEnd = Long.valueOf(words[1]);
         if (rangeStart > rangeEnd) {
