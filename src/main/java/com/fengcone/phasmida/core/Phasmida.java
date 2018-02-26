@@ -33,9 +33,6 @@ public class Phasmida {
                 continue;
             }
             if (!result) {
-                context.clearIndexPair();
-                context.setEndIndex(0);
-                context.setStartIndex(0);
                 context.setResult(result);
                 return result;
             }
