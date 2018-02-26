@@ -27,11 +27,14 @@ public class WithAnythingFragment extends AbstractFragment {
             if (result) {
                 context.putIndexPair(getFragmentsIndex(), 0, context.getStartIndex());
             }
+            //TODO 这里应该让第一个执行下其他的关键词(如果是with的话).with 是否需要执行所有关键词，然后都存储上Index，然后让Anything 选择?
+            // TODO 要是这样就相当复杂了吧
         } else {
             result = lastPair.getStartIndex() - lastSecondPair.getEndIndex() <= anythingCount;
             if (result) {
                 context.putIndexPair(getFragmentsIndex(), lastSecondPair.getEndIndex(), lastPair.getStartIndex());
             }
+            //TODO 这里应该回溯到倒数第二个startIndex 以及endIndex
         }
         return result;
     }
