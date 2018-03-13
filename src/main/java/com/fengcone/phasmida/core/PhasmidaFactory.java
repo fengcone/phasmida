@@ -10,7 +10,7 @@ import com.fengcone.phasmida.registry.PhasmidaRegistry;
  */
 public class PhasmidaFactory {
 
-    public Phasmida getPhasmida(String regex) {
+    public static final Phasmida getPhasmida(String regex) {
         if (regex == null || regex.length() == 0) {
             throw new IllegalArgumentException("error regex for " + regex);
         }
@@ -42,7 +42,7 @@ public class PhasmidaFactory {
         return phasmida;
     }
 
-    private String[] getSplit(String originWords, String regexSplitWord, String originSplitWord) {
+    private static String[] getSplit(String originWords, String regexSplitWord, String originSplitWord) {
         String[] split = originWords.split("(?!')" + regexSplitWord + "(?!')");
         for (int i = 0; i < split.length; i++) {
             String word = split[i];

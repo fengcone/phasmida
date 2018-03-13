@@ -33,8 +33,7 @@ phasmida 是一个字符串的处理工具，旨在通过一段简单的链式�
 第一个phasmida：识别某几个字符串
 ````
     RegistryUtil.registerStandardFragments();\\注册标准片段库
-    PhasmidaFactory factory = new PhasmidaFactory(); \\phasmida工厂类
-    Phasmida phasmida = factory.getPhasmida("with(Hello).with( world, phasmida)");\\通过 表达式获取Phasmida对象
+    Phasmida phasmida = PhasmidaFactory.getPhasmida("with(Hello).with( world, phasmida)");\\通过 表达式获取Phasmida对象
     PhasmidaContext context = new PhasmidaContext("Hello world");\\定义上下文对象
     boolean process = phasmida.process(context);\\调用处理方法，返回是否能被匹配上，匹配的其他信息会在Context对象中
 ````
@@ -134,7 +133,7 @@ MutexRelationRegistry.addMutexRelation(WithoutFragment.class, WithAnythingFragme
 ####        PhasmidaFactory 工厂类
  该类通过接受一个字符串表达式实例化一个Phasmida对象，典型用法如下：
 ````
-Phasmida phasmida =  new PhasmidaFactory().getPhasmida("with(Hello).with( world, phasmida)");
+Phasmida phasmida = PhasmidaFactory.getPhasmida("with(Hello).with( world, phasmida)");
 ````
 
 

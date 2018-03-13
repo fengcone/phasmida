@@ -10,8 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 public class PhasmidaTestUtil {
     public static PhasmidaContext test(String regex, String matchString) {
         RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida(regex);
+        Phasmida phasmida = PhasmidaFactory.getPhasmida(regex);
         PhasmidaContext context = new PhasmidaContext(matchString);
         phasmida.process(context);
         log.info(context.toString());

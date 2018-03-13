@@ -33,8 +33,7 @@ public class WithTest {
     @Test
     public void testCase5(){
         RegistryUtil.registerStandardFragments();
-        PhasmidaFactory factory = new PhasmidaFactory();
-        Phasmida phasmida = factory.getPhasmida("with(Hello).with( world, phasmida)");
+        Phasmida phasmida = PhasmidaFactory.getPhasmida("with(Hello).with( world, phasmida)");
         PhasmidaContext context = new PhasmidaContext("Hello phasmida");
         boolean process = phasmida.process(context);
         log.info(context.toString());
