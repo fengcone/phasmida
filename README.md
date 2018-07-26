@@ -209,6 +209,10 @@ with(1).with(3,9,7,5,4).withCharRange(0-9,9)
 withNumRange(0,1000).with(房,室,单元,-,号楼,栋,号院,房间,门,座,层).withNumRange(0,1000)
 ````
 
+基于Phasmida，结合有限状态机的地址解析系统
+````
+https://github.com/fengcone/phasmida-parsing
+
 
 
 ##      6.贡献代码
